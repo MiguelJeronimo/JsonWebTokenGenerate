@@ -23,16 +23,20 @@ fun main() {
         val key = scanner.nextLine()
         print("INGRESA TU SECRET: ")
         val secret = scanner.nextLine()
-        val token = jsonWebToken
-            .key(key= key)
-            .algorithm(algorithm = Algorithm.HMAC256(secret))
-            .generate()
-        println("**********---------------*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
-        println("JSON WEB TOKEN: $token")
-        println("**********---------------*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
-        println("DESEAS GENERAR OTRO WEB TOKEN? YES(Y)/No(N)...")
+        if (!key.isEmpty() && !secret.isEmpty()){
+            val token = jsonWebToken
+                .key(key= key)
+                .algorithm(algorithm = Algorithm.HMAC256(secret))
+                .generate()
+            println("**********---------------*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+            println("JSON WEB TOKEN: $token")
+            println("**********---------------*-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+        } else {
+            println("INGRESA TU KEY Y TU SECRET CONFIGURADOS EN EL KONG :)")
+        }
+        print("DESEAS GENERAR OTRO WEB TOKEN? YES (Y) /No (N): ")
         val brand  = scanner.nextLine()
-        continueFlow = brand.lowercase() == "y"
+        continueFlow = brand.lowercase() == "n"
         if (continueFlow){
             break
         }
